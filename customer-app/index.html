@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ક્રિષ્ના ગ્રોસરી સ્ટોર</title>
+    <!-- PWA અને લોગો કનેક્શન લિંક્સ -->
+    <link rel="manifest" href="manifest.json"> 
+<!-- ૧૯૨ સાઇઝનો લોગો (મોબાઇલ માટે) -->
+    <link rel="icon" type="image/png" sizes="192x192" href="logo-192.png">
+    <!-- ૫૧૨ સાઇઝનો લોગો (મોટી સ્ક્રીન/ટેબ્લેટ માટે) -->
+    <link rel="icon" type="image/png" sizes="512x512" href="logo-512.png">
+    
+    <!-- આઇફોન (Apple) માટે લોગો -->
+    <link rel="apple-touch-icon" href="logo-192.png">
+    
+    <!-- આઇકન્સ માટે FontAwesome ની સાચી લિંક -->
+  
+
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <!-- અલગથી બનાવેલી ડિઝાઇન ફાઇલનું જોડાણ -->
+    <link rel="stylesheet" href="customer-style.css">
+</head>
+<body>
+
+    <!-- ૧. ટોચની પટ્ટી અને સ્થિર સૂચના પટ્ટી -->
+    <div class="top-header">
+        <div class="header-main">
+            <h3 id="app-title">ક્રિષ્ના ગ્રોસરી સ્ટોર</h3>
+            <button class="lang-btn" onclick="toggleLanguage()" id="lang-btn">English</button>
+        </div>
+        <div class="notice-board" id="notice-board">લોડ થઈ રહ્યું છે...</div>
+    </div>
+
+    <!-- મુખ્ય એપ્લિકેશન સ્ક્રીન્સ (Single Page Application માળખું) -->
+    
+    <!-- હોમ પેજ સેક્શન -->
+    <div id="home-page" class="page active">
+        <!-- સર્ચ બાર કોમ્પોનન્ટ -->
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="વસ્તુ શોધો..." oninput="searchProducts()">
+        </div>
+        
+        <!-- ગોળાકાર કેટેગરી ફિલ્ટર બબલ્સ -->
+        <div class="cat-scroll" id="category-bar">
+            <!-- JavaScript દ્વારા ડાયનેમિકલી ઉમેરાશે -->
+        </div>
+
+        <!-- એડમિન સંચાલિત ઓટો-સ્લાઇડિંગ બેનર -->
+        <div class="banner-container" id="banner-area">
+            <div class="banner" id="banner-text">ખાસ ઓફર લોડ થઈ રહી છે...</div>
+        </div>
+
+        <!-- પ્રોડક્ટ લિસ્ટ ગ્રીડ -->
+        <div class="product-grid" id="product-list-area">
+            <!-- પ્રોડક્ટ કાર્ડ્સ અહીં દેખાશે -->
+        </div>
+    </div>
+
+    <!-- કેટેગરી પેજ સેક્શન -->
+    <div id="category-page" class="page">
+        <div style="padding: 15px;" id="cat-page-title"><h2>બધી કેટેગરીઝ</h2></div>
+        <div id="category-page-list"></div>
+    </div>
+
+    <!-- નોટિફિકેશન પેજ સેક્શન -->
+    <div id="notification-page" class="page">
+        <div style="padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+            <h2 id="notif-title">સૂચનાઓ (Notifications)</h2>
+            <button onclick="clearNotifications()" style="padding: 5px; color: var(--danger); background: none; border: none; font-weight: bold; cursor: pointer;">સાફ કરો</button>
+        </div>
+        <div id="notification-list-area">
+            <!-- લાઈવ નોટિફિકેશનો અહીં દેખાશે -->
+        </div>
+    </div>
+
+    <!-- એકાઉન્ટ પેજ સેક્શન (ગ્રાહક ફોન કોલ સાથે) -->
+    <div id="account-page" class="page">
+        <div style="padding:15px;"><h2 id="acc-title">મારું એકાઉન્ટ</h2></div>
+        
+        <!-- કાયમી એડમિન ફોન કોલ બટન (નવી સેટ કરેલી જગ્યા) -->
+        <a href="tel:9999999999" id="admin-call-btn" class="btn-block" style="background:#ff9800; text-decoration:none;"><i class="fa-solid fa-phone"></i> દુકાનદાર સાથે વાત કરો (Call)</a>
+        
+        <button class="btn-block" id="history-btn" onclick="showOrderHistoryView()"><i class="fa-solid fa-bag-shopping"></i> જુના ઓર્ડર (Order History)</button>
+        
+        <!-- વન-ટાઇમ રજીસ્ટ્રેશન વિગતો ડિસ્પ્લે બોર્ડ -->
+        <div style="background: white; padding: 15px; margin: 15px; border-radius: 8px; border: 1px solid #ddd;">
+            <h4 style="margin-bottom:10px;" id="prof-title">પ્રોફાઇલ વિગતો (વન-ટાઇમ)</h4>
+            <div style="margin-bottom:8px;"><strong id="lbl-n">નામ:</strong> <span id="disp-name">-</span></div>
+            <div style="margin-bottom:8px;"><strong id="lbl-m">મોબાઈલ:</strong> <span id="disp-phone">-</span></div>
+            <div style="margin-bottom:8px;"><strong id="lbl-a">સરનામું:</strong> <span id="disp-address">-</span></div>
+            <div style="margin-bottom:10px;"><strong id="lbl-l">લોકેશન સેવ્ડ:</strong> <span id="disp-loc" style="color: green;">ના</span></div>
+            <button class="btn-block" style="margin:5px 0 0 0; width:100%;" onclick="openRegistrationForm()" id="edit-prof-btn">પ્રોફાઇલ બદલો</button>
+        </div>
+
+        <button class="btn-block btn-danger" id="del-acc-btn" onclick="deleteAccountData()"><i class="fa-solid fa-trash"></i> એકાઉન્ટ ડિલીટ કરો</button>
+
+        <!-- જુના ઓર્ડર લિસ્ટ વ્યુ -->
+        <div id="order-history-area" style="display:none;">
+            <h3 style="padding:15px;" id="hist-title">તમારા ઓર્ડર્સ</h3>
+            <div id="history-list"></div>
+        </div>
+    </div>
+
+    <!-- ૨. ફરજિયાત વન-ટાઇમ રજીસ્ટ્રેશન પોપ-અપ મોડલ -->
+    <div id="registration-modal" class="modal" style="display: none;">
+        <div class="modal-content" style="text-align: left;">
+            <h3 style="text-align: center; margin-bottom: 15px;" id="reg-title">ડિલિવરી વિગતો ભરો</h3>
+            <div class="form-group" style="padding:0; margin-bottom: 12px;">
+                <label id="frm-name" style="display:block; font-weight:bold; margin-bottom:5px;">ગ્રાહકનું નામ *</label>
+                <input type="text" id="cust-name-input" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;" required>
+            </div>
+            <div class="form-group" style="padding:0; margin-bottom: 12px;">
+                <label id="frm-phone" style="display:block; font-weight:bold; margin-bottom:5px;">મોબાઈલ નંબર (૧૦ આંકડા) *</label>
+                <input type="number" id="cust-phone-input" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;" required>
+            </div>
+            <div class="form-group" style="padding:0; margin-bottom: 12px;">
+                <label id="frm-addr" style="display:block; font-weight:bold; margin-bottom:5px;">પૂરું સરનામું *</label>
+                <textarea id="cust-address-input" rows="3" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:4px;" required></textarea>
+            </div>
+            <div class="form-group" style="padding:0; margin-bottom: 12px;">
+                <button class="btn-block btn-location" style="width:100%; margin:10px 0; background:#0288d1; color:white; border:none; padding:12px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="getLiveLocation()"><i class="fa-solid fa-location-crosshairs"></i> લાઈવ લોકેશન મેળવો (100% Free)</button>
+                <span id="location-status" style="font-size:12px; color:green; font-weight:bold; display:block; text-align:center;"></span>
+            </div>
+            <button class="btn-block" style="width:100%; margin:10px 0 0 0; background:var(--primary); color:white; border:none; padding:12px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="saveRegistrationData()" id="save-reg-btn">વિગતો સેવ કરો</button>
+        </div>
+    </div>
+
+    <!-- ૩. ઓર્ડર સફળતાપૂર્વક સબમિટ થયાનું મોડલ પોપ-અપ -->
+    <div id="success-modal" class="modal">
+        <div class="modal-content" style="background:white; padding:20px; border-radius:8px; text-align:center; max-width:400px; width:100%;">
+            <div class="success-icon" style="font-size:50px; color:#4caf50; margin-bottom:10px;"><i class="fa-solid fa-circle-check"></i></div>
+            <h2 style="color:#4caf50; margin-bottom:10px;" id="pop-succ">ઓર્ડર સફળ!</h2>
+            <p id="pop-msg">તમારો ઓર્ડર સફળતાપૂર્વક નોંધાઈ ગયો છે! 👍</p>
+            <h4 style="margin: 15px 0;" id="pop-id-lbl">ઓર્ડર આઈડી (Order ID): <span id="success-order-id" style="color:#2e7d32;"></span></h4>
+            <button class="btn-block" style="width:100%; margin:0; background:#2e7d32; color:white; border:none; padding:12px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="closeSuccessModal()">ઓકે</button>
+        </div>
+    </div>
+
+    <!-- ૪. કાયમી ફિક્સ બોટમ નેવિગેશન બાર -->
+    <div class="bottom-nav">
+        <button class="nav-item active" onclick="switchPage('home-page', this)"><i class="fa-solid fa-house"></i><span id="nav-h">Home</span></button>
+        <button class="nav-item" onclick="switchPage('category-page', this)"><i class="fa-solid fa-grid-2"></i><span id="nav-c">Categories</span></button>
+        <button class="nav-item" onclick="switchPage('notification-page', this)"><i class="fa-solid fa-bell"></i><span id="nav-n">Notification</span></button>
+        <button class="nav-item" onclick="switchPage('account-page', this)"><i class="fa-solid fa-user"></i><span id="nav-a">Account</span></button>
+    </div>
+
+    <!-- ૫. કાર્ટ ફ્લોટિંગ શોર્ટકટ બટન (બારની ઉપર ફિક્સ) -->
+    <button onclick="checkoutCartProcess()" class="cart-floating-btn" style="position: fixed; bottom: 80px; right: 20px; background: #2e7d32; color: white; border: none; width: 60px; height: 60px; border-radius: 50%; font-size: 24px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); z-index: 999; cursor: pointer;">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span id="cart-badge-count" style="position: absolute; top: 0; right: 0; background: #d32f2f; color: white; font-size: 12px; border-radius: 50%; padding: 4px 8px;">0</span>
+    </button>
+
+    <!-- અલગથી બનાવેલી મુખ્ય ફાયરબેઝ જોડાણ ફાઇલ લિંક -->
+    <script src="firebase-config.js"></script>
+    <!-- અલગથી બનાવેલી એપ્લિકેશન લોજિક અને કાર્ટ મેનેજમેન્ટ ફાઇલો લિંક -->
+    <script src="customer-app.js"></script>
+    <script src="customer-cart.js"></script>
+
+    <!-- PWA સર્વિસ વર્કર રજીસ્ટ્રેશન કંટ્રોલ -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                .then(reg => console.log('Service Worker Registered Successfully!', reg.scope))
+                .catch(err => console.log('Service Worker Registration Failed:', err));
+            });
+        }
+    </script>
+</body>
+</html>

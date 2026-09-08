@@ -1,0 +1,26 @@
+{
+  "short_name": "ક્રિષ્ના સ્ટોર",
+  "name": "ક્રિષ્ના ડિજિટલ ગ્રોસરી સ્ટોર",
+  "description": "ઓનલાઇન ફ્રી કરિયાણું ઓર્ડર કરવાની એપ",
+  "icons": [
+    {
+      "src": "logo-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "logo-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "./index.html",
+  "background_color": "#f5f5f5",
+  "theme_color": "#2e7d32",
+  "display": "standalone",
+  "orientation": "portrait"
+}
+
+  

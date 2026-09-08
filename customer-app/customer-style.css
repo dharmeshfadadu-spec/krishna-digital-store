@@ -1,0 +1,384 @@
+/* ==========================================================================
+   મુખ્ય વેરિએબલ્સ અને ગ્લોબલ સેટિંગ્સ
+   ========================================================================== */
+:root {
+    --primary: #2e7d32;      /* લીલો કલર (મેઈન થીમ) */
+    --secondary: #e8f5e9;    /* આછો લીલો કલર (બેકગ્રાઉન્ડ/બબલ્સ) */
+    --text: #333333;         /* ડાર્ક લખાણ કલર */
+    --white: #ffffff;        /* સફેદ કલર */
+    --danger: #d32f2f;       /* લાલ કલર (ડીલીટ/આઉટ ઓફ સ્ટોક માટે) */
+    --warning: #ff9800;      /* ઓરેન્જ કલર (કોલ બટન માટે) */
+    --notice-bg: #fff3cd;    /* પીળો કલર (નિયમ પટ્ટી માટે) */
+    --gray: #777777;
+    --light-gray: #f5f5f5;
+    --border-color: #dddddd;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -webkit-tap-highlight-color: transparent; /* મોબાઇલ ટચ ઇફેક્ટ સ્મૂધ કરવા */
+}
+
+body {
+    background-color: var(--light-gray);
+    color: var(--text);
+    padding-bottom: 80px; /* બોટમ બાર પાછળ કોડ છુપાય નહીં તે માટે */
+    overflow-x: hidden;
+}
+
+/* ==========================================================================
+   ટોચની પટ્ટી અને સ્થિર સૂચના પટ્ટી
+   ========================================================================== */
+.top-header {
+    background-color: var(--primary);
+    color: var(--white);
+    padding: 12px 15px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.header-main h3 {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.lang-btn {
+    background-color: var(--white);
+    color: var(--primary);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.lang-btn:active {
+    background-color: var(--secondary);
+}
+
+.notice-board {
+    background-color: var(--notice-bg);
+    color: #856404;
+    padding: 8px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+    border-radius: 4px;
+    border: 1px solid #ffeeba;
+    line-height: 1.4;
+}
+
+/* ==========================================================================
+   સર્ચ બાર અને ગોળાકાર કેટેગરી બબલ્સ
+   ========================================================================== */
+.search-box {
+    padding: 12px 15px;
+    background-color: var(--white);
+    display: flex;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    font-size: 15px;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.search-box input:focus {
+    border-color: var(--primary);
+}
+
+.cat-scroll {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 12px 15px;
+    background-color: var(--white);
+    border-bottom: 1px solid var(--border-color);
+    scrollbar-width: none; /* Firefox માટે સ્ક્રોલબાર છુપાવવા */
+}
+
+.cat-scroll::-webkit-scrollbar {
+    display: none; /* Chrome/Safari માટે સ્ક્રોલબાર છુપાવવા */
+}
+
+.cat-bubble {
+    background-color: var(--secondary);
+    color: var(--text);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid #c8e6c9;
+    transition: all 0.2s;
+}
+
+.cat-bubble:active {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+/* ==========================================================================
+   ઓટો-સ્લાઇડિંગ બેનર
+   ========================================================================== */
+.banner-container {
+    padding: 12px 15px 4px 15px;
+}
+
+.banner {
+    background: linear-gradient(135deg, #4caf50, var(--primary));
+    color: var(--white);
+    padding: 18px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+    line-height: 1.4;
+}
+
+/* ==========================================================================
+   પ્રોડક્ટ્સ ગ્રીડ અને પ્રોડક્ટ કાર્ડ્સ
+   ========================================================================== */
+.product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* એક લાઇનમાં ૨ વસ્તુઓ (મોબાઇલ માટે બેસ્ટ) */
+    gap: 12px;
+    padding: 15px;
+}
+
+.product-card {
+    background-color: var(--white);
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.prod-img {
+    width: 100%;
+    height: 110px;
+    object-fit: contain;
+    margin-bottom: 8px;
+}
+
+.prod-name {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    line-height: 1.3;
+    height: 36px; /* બે લાઇન ફિક્સ રાખવા */
+    overflow: hidden;
+}
+
+.prod-weight {
+    font-size: 12px;
+    color: var(--gray);
+    margin-bottom: 8px;
+}
+
+.price-line {
+    font-size: 14px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.mrp {
+    text-decoration: line-through;
+    color: var(--gray);
+    font-size: 12px;
+}
+
+.sprice {
+    font-weight: bold;
+    color: var(--primary);
+    font-size: 15px;
+}
+
+/* પ્લસ માઇનસ જથ્થો કંટ્રોલ બટનો */
+.qty-control {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--primary);
+    color: var(--white);
+    border-radius: 6px;
+    padding: 4px;
+}
+
+.qty-btn {
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 18px;
+    font-weight: bold;
+    width: 32px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.qty-num {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.out-of-stock-badge {
+    background-color: var(--danger);
+    color: var(--white);
+    text-align: center;
+    padding: 6px;
+    font-size: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+/* ==========================================================================
+   પેજ મેનેજમેન્ટ સેટિંગ્સ
+   ========================================================================== */
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+/* લિસ્ટ આઇટમ (ઓર્ડર હિસ્ટ્રી / નોટિફિકેશન માટે) */
+.list-item {
+    background-color: var(--white);
+    padding: 15px;
+    margin: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   ફોર્મ અને જનરલ બટનો
+   ========================================================================== */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.btn-block {
+    display: block;
+    width: calc(100% - 30px);
+    margin: 15px auto;
+    background-color: var(--primary);
+    color: var(--white);
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-block i {
+    margin-right: 6px;
+}
+
+.btn-danger {
+    background-color: var(--danger);
+}
+
+/* ==========================================================================
+   કાયમી ફિક્સ બોટમ નેવિગેશન બાર
+   ========================================================================== */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--white);
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0;
+    border-top: 1px solid var(--border-color);
+    z-index: 1000;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #666666;
+    font-size: 11px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    width: 25%;
+    outline: none;
+}
+
+.nav-item.active {
+    color: var(--primary);
+    font-weight: bold;
+}
+
+.nav-item i {
+    font-size: 20px;
+    margin-bottom: 3px;
+}
+
+/* ==========================================================================
+   પોપ-અપ મોડલ વિન્ડોઝ (રજીસ્ટ્રેશન અને ઓર્ડર સક્સેસ)
+   ========================================================================== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal-content {
+    background-color: var(--white);
+    padding: 22px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.20);
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
